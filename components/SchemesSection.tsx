@@ -13,8 +13,6 @@ import {
   FileText,
   Globe2,
   ScrollText,
-  Shield,
-  Users,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import {
@@ -234,10 +232,7 @@ export default function SchemesSection() {
 
                       {/* Beneficiaries & Action Footer */}
                       <div className="mt-5 border-t border-line/70 pt-3 hc:border-white">
-                        <div className="flex items-center gap-1.5 text-[11px] text-muted hc:text-neutral-400">
-                          <Users size={12} className={`shrink-0 ${palette.iconColor}`} />
-                          <span className="truncate">{s.beneficiaries}</span>
-                        </div>
+                       
 
                         <div className="mt-2.5 flex items-center justify-between">
                           <a

@@ -15,7 +15,6 @@ import {
   Maximize2,
   Play,
   ShoppingBag,
-  Sparkles,
   Video,
   X,
 } from "lucide-react";
