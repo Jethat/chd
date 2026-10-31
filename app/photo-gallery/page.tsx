@@ -16,39 +16,34 @@ type Photo = { src: string; alt: string; caption: string };
  */
 const photos: Photo[] = [
   {
-    src: "/images/gallery/photo-3.jpg",
+    src: "/images/1.png",
     alt: "National seminar on Hindi",
-    caption: "National seminar on the development of Hindi.",
+    caption: "National seminar on the development and propagation of Hindi.",
   },
   {
-    src: "/images/gallery/photo-4.jpg",
+    src: "/images/2.png",
     alt: "Puraskar award ceremony",
     caption: "Hinditarbhashi Hindi Lekhak Puraskar award ceremony.",
   },
   {
-    src: "/images/gallery/photo-5.jpg",
+    src: "/images/3.png",
     alt: "Workshop for new writers",
-    caption: "Shivir: workshop for new writers.",
+    caption: "Shivir: national workshop for emerging Hindi writers.",
   },
   {
-    src: "/images/gallery/photo-6.jpg",
-    alt: "Book exhibition",
-    caption: "Book exhibition and sale of Hindi publications.",
+    src: "/images/5.png",
+    alt: "Book exhibition and sale",
+    caption: "Book exhibition and distribution of CHD publications.",
   },
   {
-    src: "/images/gallery/photo-7.jpg",
+    src: "/images/6.png",
     alt: "Study tour of Hindi students",
-    caption: "Study tour of Hindi students from non-Hindi speaking areas.",
+    caption: "Study tour of Hindi students from non-Hindi speaking regions.",
   },
   {
-    src: "/images/gallery/photo-8.jpg",
-    alt: "Release of a journal issue",
-    caption: "Release of a new issue of the journal Bhasha.",
-  },
-  {
-    src: "/images/gallery/photo-9.jpg",
-    alt: "Regional office event",
-    caption: "Programme at one of the regional offices.",
+    src: "/images/7.png",
+    alt: "Release of journal Bhasha",
+    caption: "Release of the new volume of the prestigious research journal Bhasha.",
   },
 ];
 
