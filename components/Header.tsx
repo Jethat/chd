@@ -11,6 +11,30 @@ export default function Header() {
     <header className="border-b border-line bg-linear-to-b from-brand-light to-white to-70%">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 pb-2.5 pt-3 xl:flex-nowrap xl:gap-x-8 xl:pt-5">
         {/* Main logo + name */}
+
+        <div className="ml-auto flex flex-none items-center border-r border-line pr-3 sm:pr-5 xl:mr-0 xl:pr-7">
+          <ul className="flex items-center gap-2 sm:gap-4 xl:gap-6">
+            {sideLogos.map((p) => (
+              <li key={p.src} className="flex">
+                <a
+                  href={p.href}
+                  aria-label={p.alt}
+                  className="flex rounded-xl p-1.5 transition hover:-translate-y-0.5"
+                >
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    width={80}
+                    height={80}
+                    unoptimized
+                    priority
+                    className="h-14 w-32 object-contain "
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
         <Link
           href="/"
           aria-label="Central Hindi Directorate, home"
@@ -25,6 +49,8 @@ export default function Header() {
             priority
             className="size-12 shrink-0 object-contain sm:size-[clamp(3.5rem,8.4vw,5.25rem)]"
           />
+
+
 
           {/* Width is set by the small second line; the big first line is justified to match it */}
           <div className="flex w-max min-w-0 flex-col gap-1 text-[1.1rem] sm:text-[clamp(1.25rem,2.6vw,1.75rem)]">
@@ -69,29 +95,7 @@ export default function Header() {
         </form>
 
         {/* Side logos */}
-        <div className="ml-auto flex flex-none items-center border-l border-line pl-3 sm:pl-5 xl:ml-0 xl:pl-7">
-          <ul className="flex items-center gap-2 sm:gap-4 xl:gap-6">
-            {sideLogos.map((p) => (
-              <li key={p.src} className="flex">
-                <a
-                  href={p.href}
-                  aria-label={p.alt}
-                  className="flex rounded-xl p-1.5 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-dark/30"
-                >
-                  <Image
-                    src={p.src}
-                    alt={p.alt}
-                    width={80}
-                    height={80}
-                    unoptimized
-                    priority
-                    className="h-14 w-30 object-contain sm:h-[clamp(4.75rem,9vw,5rem)] sm:w-[clamp(3.5rem,9vw,5.9rem)]"
-                  />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        
       </div>
     </header>
   );
