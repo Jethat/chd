@@ -45,8 +45,11 @@ export default function Dashboard() {
       byCat[c] = (byCat[c] ?? 0) + i.price * i.qty;
       units[i.title] = (units[i.title] ?? 0) + i.qty;
     }));
+    const refTime = allOrders.length
+      ? Math.max(...allOrders.map((o) => new Date(o.createdAt).getTime()))
+      : 0;
     const days = Array.from({ length: 7 }, (_, k) => {
-      const dt = new Date(Date.now() - (6 - k) * 864e5);
+      const dt = new Date((refTime || 1735689600000) - (6 - k) * 864e5);
       return { label: dt.toLocaleDateString("en-IN", { weekday: "short" }), v: live.filter((o) => new Date(o.createdAt).toDateString() === dt.toDateString()).reduce((t, o) => t + o.total, 0) };
     });
     const pay: Record<string, number> = {};

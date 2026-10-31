@@ -15,7 +15,12 @@ export default function HeroVideo({
   poster = "/images/hero-poster.jpg",
 }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }
+    return true;
+  });
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -28,7 +33,6 @@ export default function HeroVideo({
 
     if (mediaQuery.matches) {
       video.pause();
-      setIsPlaying(false);
     }
 
     const handleMotionPreference = (event: MediaQueryListEvent) => {
@@ -154,7 +158,7 @@ export default function HeroVideo({
           )}
         </button>
 
-        {/* <div className="flex w-24 flex-col gap-1 sm:w-36">
+        <div className="flex w-24 flex-col gap-1 sm:w-36">
           <div
             className="h-1 overflow-hidden rounded-full bg-white/30"
             role="progressbar"
@@ -168,7 +172,7 @@ export default function HeroVideo({
               style={{ width: `${progress}%` }}
             />
           </div>
-        </div> */}
+        </div>
       </div>
     </section>
   );

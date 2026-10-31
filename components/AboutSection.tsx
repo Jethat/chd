@@ -32,12 +32,12 @@ export default function AboutSection() {
           </h2>
 
           <p className="mb-4 text-justify text-base leading-[1.8] text-ink sm:text-[15px] hc:text-white">
-            With the motto of "Aham Rashtri Sangmani Vasunam'', the Central Hindi Directorate was established on 1st March, 1960 as a subordinate office of the then Ministry of Education(At present Department of Higher Education, Ministry Of Education). This is the apex body of Central Government which is persistently engaged in the execution of a multiplicity of important schemes for imparting an all-India character to Hindi, connecting divergent people through this language and striving consistently to get a place of prestige for Hindi at the global level.
+            With the motto of &ldquo;Aham Rashtri Sangmani Vasunam&rdquo;, the Central Hindi Directorate was established on 1st March, 1960 as a subordinate office of the then Ministry of Education(At present Department of Higher Education, Ministry Of Education). This is the apex body of Central Government which is persistently engaged in the execution of a multiplicity of important schemes for imparting an all-India character to Hindi, connecting divergent people through this language and striving consistently to get a place of prestige for Hindi at the global level.
 
 Article 351 of Part 17 of the Constitution of India gives clear instructions for the development of Hindi language:
           </p>
           <p className="mb-4 text-justify text-base leading-[1.8] text-muted sm:text-[15px] hc:text-white">
-            "It shall be the duty of the Union to promote the spread of the Hindi language, to develop it so that it may serve as a medium of expression for all the elements of the composite culture of India and to secure its enrichment by assimilating without interfering with its genius, the forms, style and expressions used in Hindustani and in the other languages of India specified in the Eighth Schedule, and by drawing, wherever necessary or desirable, for its vocabulary, primarily on Sanskrit and secondarily on other languages." The Central Hindi Directorate was born to follow the same sentiments and instructions of the Constitution.
+            &ldquo;It shall be the duty of the Union to promote the spread of the Hindi language, to develop it so that it may serve as a medium of expression for all the elements of the composite culture of India and to secure its enrichment by assimilating without interfering with its genius, the forms, style and expressions used in Hindustani and in the other languages of India specified in the Eighth Schedule, and by drawing, wherever necessary or desirable, for its vocabulary, primarily on Sanskrit and secondarily on other languages.&rdquo; The Central Hindi Directorate was born to follow the same sentiments and instructions of the Constitution.
           </p>
 
           <Link

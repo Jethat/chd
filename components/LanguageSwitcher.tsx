@@ -27,10 +27,23 @@ const chooseLang = (code: string) => {
   location.reload();
 };
 
+type GoogleTranslateWindow = Window & typeof globalThis & {
+  __gtGuard?: boolean;
+  googleTranslateElementInit?: () => void;
+  google?: {
+    translate?: {
+      TranslateElement: new (
+        options: { pageLanguage: string; includedLanguages: string; autoDisplay: boolean },
+        elementId: string
+      ) => unknown;
+    };
+  };
+};
+
 // Google rewrites text nodes, which can make React throw when it later updates them.
 // These guards make React ignore nodes that were moved by the translator.
 function guardDom() {
-  const w = window as any;
+  const w = window as GoogleTranslateWindow;
   if (w.__gtGuard) return;
   w.__gtGuard = true;
   const rm = Node.prototype.removeChild;
@@ -47,24 +60,31 @@ function guardDom() {
 
 export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState("en");
+  const [lang] = useState(() => {
+    if (typeof document !== "undefined") {
+      return readLang();
+    }
+    return "en";
+  });
   const [ready, setReady] = useState(false);
   const box = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     guardDom();
-    setLang(readLang());
-    (window as any).googleTranslateElementInit = () => {
-      new (window as any).google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          includedLanguages: LANGS.filter((l) => l.code !== "en").map((l) => l.code).join(","),
-          autoDisplay: false,
-        },
-        "google_translate_element"
-      );
+    const w = window as GoogleTranslateWindow;
+    w.googleTranslateElementInit = () => {
+      if (w.google?.translate?.TranslateElement) {
+        new w.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: LANGS.filter((l) => l.code !== "en").map((l) => l.code).join(","),
+            autoDisplay: false,
+          },
+          "google_translate_element"
+        );
+      }
     };
-    setReady(true);
+    const timer = setTimeout(() => setReady(true), 0);
 
     const onDown = (e: MouseEvent) => {
       if (box.current && !box.current.contains(e.target as Node)) setOpen(false);
@@ -73,6 +93,7 @@ export default function LanguageSwitcher() {
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
     return () => {
+      clearTimeout(timer);
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("keydown", onKey);
     };

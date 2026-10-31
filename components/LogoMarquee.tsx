@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Reveal from "@/components/Reveal";
 import { logos, type Logo } from "@/data/logos";
 
 /** Copies of the logo list in the track. The track slides by half its width, so this must be an even number. */
