@@ -126,7 +126,7 @@ export default function HeroVideo({
       </div>
 
       {/* Bottom-center playback controls */}
-      <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/20 bg-black/45 px-4 py-2.5 text-white shadow-lg backdrop-blur-md">
+      {/* <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/20 bg-black/45 px-4 py-2.5 text-white shadow-lg backdrop-blur-md">
         <button
           type="button"
           onClick={togglePlayback}
@@ -173,7 +173,7 @@ export default function HeroVideo({
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

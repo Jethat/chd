@@ -4,7 +4,7 @@ export const footerInfo = {
   query: "For any query regarding this website, please contact the web information manager: Director",
   phone: "011-20862356",
   address: "Central Hindi Directorate, West Block-VII, Ramakrishna Puram, New Delhi-110066",
-  emails: ["dirchd-mhrd[at]gov[dot]in", "aro-chd[dot]edu[at]nic[dot]in", "patodirectorchd[at]gmail[dot]com"],
+  emails: ["dirchd-mhrd@gov.in", "aro-chd.edu@nic.in", "patodirectorchd@gmail.com"],
   visitors: 951703,
   lastUpdated: "30-10-2026 8:31 pm",
   since: 2019,

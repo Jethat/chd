@@ -25,7 +25,7 @@ interface GalleryItem {
   src: string;
   alt: string;
   title: string;
-  titleHi: string;
+
   caption: string;
   tag: string;
 }
@@ -36,7 +36,7 @@ const galleryPhotos: GalleryItem[] = [
     src: "/images/1.png",
     alt: "National Seminar on Hindi Language",
     title: "National Seminar on Hindi Language",
-    titleHi: "हिंदी भाषा पर राष्ट्रीय संगोष्ठी",
+
     caption: "Academic delegates discussing national propagation and expansion of Hindi.",
     tag: "National Seminar",
   },
@@ -45,7 +45,7 @@ const galleryPhotos: GalleryItem[] = [
     src: "/images/2.png",
     alt: "Hinditarbhashi Hindi Lekhak Puraskar",
     title: "National Author Awards Ceremony",
-    titleHi: "हिंदीतरभाषी लेखक पुरस्कार समारोह",
+
     caption: "Prestigious award ceremony honouring non-Hindi speaking Hindi scholars.",
     tag: "Award Ceremony",
   },
@@ -54,7 +54,7 @@ const galleryPhotos: GalleryItem[] = [
     src: "/images/3.png",
     alt: "Shivir workshop for emerging authors",
     title: "Writers' Workshop (Shivir)",
-    titleHi: "नवलेखक कार्यशाला (शिविर)",
+
     caption: "Intensive training programmes encouraging new talent across regional centres.",
     tag: "Workshop",
   },
@@ -63,7 +63,7 @@ const galleryPhotos: GalleryItem[] = [
     src: "/images/5.png",
     alt: "CHD Book Exhibition and Sales",
     title: "Book Exhibition & Fair",
-    titleHi: "पुस्तक प्रदर्शनी एवं बिक्री मेला",
+
     caption: "National book distribution promoting bilingual dictionaries and glossaries.",
     tag: "Exhibition",
   },
@@ -72,7 +72,7 @@ const galleryPhotos: GalleryItem[] = [
     src: "/images/6.png",
     alt: "Study Tour of Hindi Students",
     title: "Cultural Student Study Tour",
-    titleHi: "हिंदी छात्र अध्ययन यात्रा",
+
     caption: "Exchange visits connecting Hindi students from non-Hindi speaking states.",
     tag: "Study Tour",
   },
@@ -81,7 +81,7 @@ const galleryPhotos: GalleryItem[] = [
     src: "/images/7.png",
     alt: "Release of Bhasha Research Journal",
     title: "Journal 'Bhasha' Volume Release",
-    titleHi: "शोध पत्रिका 'भाषा' का लोकार्पण",
+
     caption: "Release of official peer-reviewed research quarterly by dignitaries.",
     tag: "Publication",
   },
@@ -91,7 +91,7 @@ interface VideoItem {
   id: string;
   youtubeId: string;
   title: string;
-  titleHi: string;
+
   category: string;
   duration: string;
   description: string;
@@ -103,7 +103,7 @@ const featuredVideos: VideoItem[] = [
     id: "intro",
     youtubeId: "hBi_Furqqe8",
     title: "Central Hindi Directorate - An Introduction",
-    titleHi: "केंद्रीय हिंदी निदेशालय - एक परिचय",
+
     category: "Official Documentary",
     duration: "15:20",
     description: "An overview of CHD's historical journey, regional centres, and ongoing schemes for the promotion of Hindi.",
@@ -113,7 +113,7 @@ const featuredVideos: VideoItem[] = [
     id: "story",
     youtubeId: "m8fMvSC-qmY",
     title: "Development of the Hindi Short Story (Part 1)",
-    titleHi: "हिंदी कहानी का विकास (भाग 1)",
+
     category: "Literary Lecture Series",
     duration: "24:45",
     description: "In-depth literary analysis on the evolution, themes, and prominent authors of Hindi short fiction.",
@@ -234,7 +234,7 @@ export default function CommunitySection() {
                   <GraduationCap size={15} />
                 </span>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-brand-dark hc:text-white">
-                  Online Services &bull; विभागीय ऑनलाइन सेवाएं
+                  Online Services
                 </h3>
               </div>
               <span className="text-xs text-muted hc:text-neutral-300">
@@ -265,7 +265,7 @@ export default function CommunitySection() {
                     Online Correspondence Course
                   </h4>
                   <p className="mt-1 text-xs text-muted hc:text-neutral-300">
-                    &bull; Hindi Certificate &amp; Diploma courses in 14 languages.
+                    Hindi Certificate &amp; Diploma courses in 14 languages.
                   </p>
                 </div>
                 <div className="mt-3 flex items-center gap-1 border-t border-line/60 pt-2 text-[11px] font-semibold text-amber-800 group-hover:underline hc:border-white hc:text-amber-300">
@@ -294,7 +294,7 @@ export default function CommunitySection() {
                     Online Bhasha Magazine
                   </h4>
                   <p className="mt-1 text-xs text-muted hc:text-neutral-300">
-                    &bull; Quarterly research journal, Sahityamala &amp; archives.
+                    Quarterly research journal, Sahityamala &amp; archives.
                   </p>
                 </div>
                 <div className="mt-3 flex items-center gap-1 border-t border-line/60 pt-2 text-[11px] font-semibold text-emerald-800 group-hover:underline hc:border-white hc:text-emerald-300">
@@ -321,7 +321,7 @@ export default function CommunitySection() {
                     Sales &amp; Distribution Portal
                   </h4>
                   <p className="mt-1 text-xs text-muted hc:text-neutral-300">
-                    &bull; Official dictionaries, bilingual glossaries &amp; books.
+                    Official dictionaries, bilingual glossaries &amp; books.
                   </p>
                 </div>
                 <div className="mt-3 flex items-center gap-1 border-t border-line/60 pt-2 text-[11px] font-semibold text-brand group-hover:underline hc:border-white hc:text-red-300">
@@ -357,7 +357,7 @@ export default function CommunitySection() {
                       Photo Gallery
                     </h3>
                     <p className="text-xs text-muted hc:text-neutral-300">
-                      चित्र दीर्घा &bull; Auto-sliding Slideshow
+                      Auto-sliding Slideshow
                     </p>
                   </div>
                 </div>
@@ -405,10 +405,10 @@ export default function CommunitySection() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
                       {/* Top Badges */}
-                      <div className="absolute left-3 top-3 right-3 flex items-center justify-between text-white">
-                        <span className="rounded-full bg-black/60 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider backdrop-blur-xs">
+                      <div className="absolute left-3 top-3 right-3 flex items-end justify-end text-white">
+                        {/* <span className="rounded-full bg-black/60 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider backdrop-blur-xs">
                           {photo.tag}
-                        </span>
+                        </span> */}
                         <span className="inline-flex items-center gap-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-xs">
                           <Maximize2 size={10} /> Click to expand
                         </span>
@@ -417,16 +417,16 @@ export default function CommunitySection() {
                       {/* Bottom Caption Overlay */}
                       <div className="absolute bottom-3 left-3 right-3 text-white">
                         <div className="flex items-center gap-2">
-                          <span className="rounded bg-brand px-1.5 py-0.5 font-mono text-[10px] font-bold text-white">
+                          {/* <span className="rounded bg-brand px-1.5 py-0.5 font-mono text-[10px] font-bold text-white">
                             {index + 1} / {galleryPhotos.length}
-                          </span>
+                          </span> */}
                           <h4 className="line-clamp-1 text-sm font-bold text-white">
                             {photo.title}
                           </h4>
                         </div>
-                        <p className="mt-1 line-clamp-1 text-xs text-neutral-200">
+                        {/* <p className="mt-1 line-clamp-1 text-xs text-neutral-200">
                           {photo.caption}
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                   ))}
@@ -457,39 +457,10 @@ export default function CommunitySection() {
                     <ChevronRight size={20} />
                   </button>
                 </div>
-
-                {/* Bottom Dot Controls & Click to View Indicator */}
-                <div className="flex items-center justify-between border-t border-white/10 bg-black/70 px-4 py-2.5 backdrop-blur-sm">
-                  <div className="flex items-center gap-1.5">
-                    {galleryPhotos.map((_, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setActivePhoto(idx)}
-                        aria-label={`Go to photo ${idx + 1}`}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${idx === activePhoto
-                          ? "w-6 bg-brand"
-                          : "w-1.5 bg-white/40 hover:bg-white/70"
-                          }`}
-                      />
-                    ))}
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setLightboxIndex(activePhoto)}
-                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-white/90 hover:text-white hover:underline"
-                  >
-                    <Maximize2 size={11} /> Open Lightbox &rarr;
-                  </button>
-                </div>
               </div>
 
               {/* Bottom Card Footer */}
-              <div className="mt-4 flex items-center justify-between text-xs">
-                <span className="text-muted hc:text-neutral-400">
-                  Auto-playing every 4s &bull; Hover to pause
-                </span>
+              <div className="mt-4 flex items-center justify-center text-xs">
                 <Link
                   href="/photo-gallery"
                   className="font-semibold text-brand hover:underline hc:text-yellow-300"
@@ -516,7 +487,7 @@ export default function CommunitySection() {
                       Video Gallery
                     </h3>
                     <p className="text-xs text-muted hc:text-neutral-300">
-                      वीडियो एवं वृत्तचित्र &bull; Official Documentaries
+                      Official Documentaries
                     </p>
                   </div>
                 </div>
@@ -600,9 +571,6 @@ export default function CommunitySection() {
                       <h4 className="mt-1 line-clamp-1 text-xs font-semibold text-ink hc:text-white">
                         {video.title}
                       </h4>
-                      <p lang="hi" className="notranslate mt-0.5 line-clamp-1 text-[10px] text-muted hc:text-neutral-400">
-                        {video.titleHi}
-                      </p>
                     </button>
                   );
                 })}

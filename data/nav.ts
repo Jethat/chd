@@ -21,10 +21,10 @@ export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
     label: "About Us",
-    href: "about",
+    href: "/about",
     children: [
-      { label: "Organization Chart", href: "organization-chart" },
-      { label: "Duties and Responsibilities", href: "#" },
+      { label: "Organization Chart", href: "/about/organization-chart" },
+      { label: "Duties and Responsibilities", href: "/about/duties-responsibilities" },
       { label: "Programme and Guidelines", href: "#" },
       { label: "Who's Who", href: "#" },
       { label: "Ex-Directors", href: "#" },
@@ -32,28 +32,28 @@ export const navItems: NavItem[] = [
       { label: "Director Introduction", href: "#" },
     ],
   },
-  { label: "Employees Corner", href: "employees-corner" },
+  { label: "Employees Corner", href: "/employees-corner" },
   {
     label: "Schemes",
-    href: "#",
+    href: "/schemes",
     children: [
       {
         label: "Correspondence Courses",
-        href: "#",
+        href: "/schemes/correspondence-courses",
         // placeholder name, replace with the real item
-        children: [{ label: "Course Details", href: "#" }],
+        children: [{ label: "Online Correspondence Course", href: "#" }],
       },
       {
         label: "Grants",
-        href: "#",
+        href: "/schemes/grants",
         // placeholder names, replace with the real items
         children: [
           { label: "Grant Guidelines", href: "#" },
           { label: "Grant Application", href: "#" },
         ],
       },
-      { label: "Vistar", href: "#" },
-      { label: "Kosh", href: "#" },
+      { label: "Vistar", href: "/schemes/vistar" },
+      { label: "Kosh", href: "/schemes/kosh" },
       { label: "Free Distribution, Exhibition and Sales", href: "#" },
       { label: "Bhasha Varsiki & Sahityamala", href: "#" },
       { label: "Coordination, RTI & Rajbhasha", href: "#" },
@@ -66,13 +66,13 @@ export const navItems: NavItem[] = [
   {
     label: "Downloads",
     href: "#",
-    children: [{ label: "Applications & Forms of schemes", href: "application-forms" }],
+    children: [{ label: "Applications & Forms of schemes", href: "/application-forms" }],
   },
   {
     label: "Gallery",
     href: "#",
     children: [
-      { label: "Photo Gallery", href: "photo-gallery" },
+      { label: "Photo Gallery", href: "/photo-gallery" },
       { label: "Video Gallery", href: "#" },
       { label: "Hindi Bhashavani Youtube", href: "#" },
     ],
@@ -80,7 +80,7 @@ export const navItems: NavItem[] = [
   {
     label: "RTI",
     href: "#",
-    children: [{ label: "Right to Information Report", href: "rti-report" }],
+    children: [{ label: "Right to Information Report", href: "/rti-report" }],
   },
   {
     label: "FAQs",
@@ -113,6 +113,6 @@ export const navItems: NavItem[] = [
       },
     ],
   },
-  { label: "Contact Us", href: "contact" },
+  { label: "Contact Us", href: "/contact" },
   { label: "E-Cart", href: "/e-cart" },
 ];

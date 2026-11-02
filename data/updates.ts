@@ -15,7 +15,6 @@ export interface Update {
 export const latestUpdates: Update[] = [
   {
     title: "Applications invited for correspondence courses in Hindi: Session 2026–27",
-    titleHi: "पत्राचार पाठ्यक्रम (सत्र 2026-27) में प्रवेश हेतु आवेदन आमंत्रित",
     category: "Admissions",
     refNo: "CHD/CC/ADM/2026/112",
     fileSize: "PDF • 420 KB",
@@ -26,7 +25,6 @@ export const latestUpdates: Update[] = [
   },
   {
     title: "Notice regarding financial assistance & grants under Voluntary Hindi Organisations scheme",
-    titleHi: "स्वैच्छिक हिन्दी संस्थाओं को वित्तीय सहायता योजना के अंतर्गत सूचना",
     category: "Grants",
     refNo: "CHD/VHO/GRANTS/2026/89",
     fileSize: "PDF • 680 KB",
@@ -37,7 +35,6 @@ export const latestUpdates: Update[] = [
   },
   {
     title: "Hindi Bhasha & Varsiki Research Journal: Call for academic contributions & essays",
-    titleHi: "भाषा एवं वार्षिकी शोध पत्रिका हेतु शोध आलेख एवं निबंध आमंत्रण",
     category: "Journals",
     refNo: "CHD/PUB/BHASHA/2026/45",
     fileSize: "PDF • 310 KB",
@@ -48,7 +45,6 @@ export const latestUpdates: Update[] = [
   },
   {
     title: "Recruitment notice: Engagement of Consultant & Research Associates on contract",
-    titleHi: "भर्ती सूचना: संविदा आधार पर सलाहकार एवं शोध सहयोगियों का चयन",
     category: "Recruitment",
     refNo: "CHD/EST/RECT/2026/19",
     fileSize: "PDF • 520 KB",

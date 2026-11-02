@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 type Duty = {
   id: string;
   title: string;
-  titleHi?: string;
+
   icon: typeof BookOpen;
   color: {
     topLine: string;
@@ -45,7 +45,7 @@ const duties: Duty[] = [
   {
     id: "A",
     title: "Development of Hindi",
-    titleHi: "हिन्दी का विकास एवं मानक कोश निर्माण",
+
     icon: BookMarked,
     color: {
       topLine: "from-amber-500 to-orange-600",
@@ -64,7 +64,7 @@ const duties: Duty[] = [
   {
     id: "B",
     title: "Devnagari Script Standardization",
-    titleHi: "देवनागरी लिपि का मानकीकरण",
+
     icon: Languages,
     color: {
       topLine: "from-blue-600 to-indigo-600",
@@ -82,7 +82,7 @@ const duties: Duty[] = [
   {
     id: "C",
     title: "Promotion of Hindi Across States",
-    titleHi: "हिन्दी का अखिल भारतीय प्रसार",
+
     icon: Compass,
     color: {
       topLine: "from-emerald-500 to-teal-600",
@@ -102,7 +102,7 @@ const duties: Duty[] = [
   {
     id: "D",
     title: "Journals & Literary Publications",
-    titleHi: "शोध पत्रिकाएं एवं साहित्यमाला",
+
     icon: Newspaper,
     color: {
       topLine: "from-purple-600 to-violet-600",
@@ -120,7 +120,7 @@ const duties: Duty[] = [
   {
     id: "E",
     title: "Extension & Integration Programmes",
-    titleHi: "विस्तार कार्यक्रम एवं संगोष्ठियां",
+
     icon: Users2,
     color: {
       topLine: "from-rose-500 to-pink-600",
@@ -140,7 +140,7 @@ const duties: Duty[] = [
   {
     id: "F",
     title: "National Literary Awards (Puraskar)",
-    titleHi: "राष्ट्रीय पुरस्कार योजनाएं",
+
     icon: Award,
     color: {
       topLine: "from-amber-600 to-yellow-600",
@@ -158,7 +158,7 @@ const duties: Duty[] = [
   {
     id: "G",
     title: "Recognition of Hindi Examinations",
-    titleHi: "हिन्दी परीक्षाओं की मान्यता",
+
     icon: FileCheck2,
     color: {
       topLine: "from-teal-600 to-cyan-600",
@@ -175,7 +175,7 @@ const duties: Duty[] = [
   {
     id: "H",
     title: "Correspondence Courses in Hindi",
-    titleHi: "दूरस्थ शिक्षा एवं पत्राचार पाठ्यक्रम",
+
     icon: GraduationCap,
     color: {
       topLine: "from-blue-600 to-sky-600",
@@ -193,7 +193,7 @@ const duties: Duty[] = [
   {
     id: "I",
     title: "Financial Assistance to VHOs",
-    titleHi: "स्वैच्छिक हिन्दी संस्थाओं को वित्तीय सहायता",
+
     icon: Building2,
     color: {
       topLine: "from-emerald-600 to-teal-700",
@@ -210,7 +210,7 @@ const duties: Duty[] = [
   {
     id: "J",
     title: "Free Distribution of Hindi Books",
-    titleHi: "पुस्तकों का निःशुल्क वितरण",
+
     icon: BookOpen,
     color: {
       topLine: "from-indigo-600 to-purple-600",
@@ -226,7 +226,7 @@ const duties: Duty[] = [
   {
     id: "K",
     title: "Book Exhibitions & Pan-India Sales",
-    titleHi: "पुस्तक प्रदर्शनी एवं बिक्री संवर्धन",
+
     icon: Library,
     color: {
       topLine: "from-orange-500 to-amber-600",
@@ -312,22 +312,13 @@ export default function AboutPage() {
 
           <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-900 shadow-2xs hc:border-white hc:bg-neutral-900 hc:text-white">
-                <Sparkles size={12} className="text-amber-600" />
-                <span>Apex Body &bull; उच्चतर शिक्षा विभाग, शिक्षा मंत्रालय</span>
-              </div>
               <h1
                 id="about-title"
                 className="mt-3 text-[clamp(2rem,3.6vw,2.8rem)] font-bold leading-tight text-brand-dark hc:text-white"
               >
                 About Central Hindi Directorate
               </h1>
-              <p
-                lang="hi"
-                className="notranslate mt-1 text-base font-semibold text-brand/90 hc:text-neutral-300"
-              >
-                केन्द्रीय हिन्दी निदेशालय — परिचय, संवैधानिक अधिदेश एवं वैधानिक दायित्व
-              </p>
+              
             </div>
 
             <div className="flex items-center gap-2">
@@ -354,7 +345,6 @@ export default function AboutPage() {
                 <Shield size={16} className="shrink-0 text-amber-600" />
                 <div>
                   <span lang="hi" className="text-sm font-bold text-amber-950">
-                    &ldquo;अहं राष्ट्री संगमनी वसूनाम्&rdquo;
                   </span>{" "}
                   &bull;{" "}
                   <span className="font-normal italic">
@@ -430,10 +420,6 @@ export default function AboutPage() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-10 text-center sm:mb-12">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-light px-3 py-1 text-xs font-semibold text-brand hc:bg-black hc:text-white hc:ring-1 hc:ring-white">
-              <CheckCircle2 size={13} />
-              STATUTORY CHARTER &bull; कार्य एवं दायित्व
-            </span>
             <h2
               id="duties-title"
               className="mt-2 text-[clamp(1.7rem,3vw,2.3rem)] font-bold leading-tight text-brand-dark hc:text-white"
@@ -477,14 +463,6 @@ export default function AboutPage() {
                     <h3 className="mt-3.5 text-base font-bold text-ink hc:text-white">
                       {d.title}
                     </h3>
-                    {d.titleHi && (
-                      <p
-                        lang="hi"
-                        className="notranslate mt-0.5 text-xs font-semibold text-muted hc:text-neutral-300"
-                      >
-                        {d.titleHi}
-                      </p>
-                    )}
 
                     {/* Items */}
                     {d.items && (
@@ -519,10 +497,6 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-light px-3 py-1 text-xs font-semibold text-brand hc:bg-black hc:text-white hc:ring-1 hc:ring-white">
-                <MapPin size={12} />
-                PAN-INDIA NETWORK &bull; क्षेत्रीय कार्यालय
-              </span>
               <h2
                 id="offices-title"
                 className="mt-2 text-[clamp(1.7rem,3vw,2.3rem)] font-bold leading-tight text-brand-dark hc:text-white"
@@ -564,9 +538,6 @@ export default function AboutPage() {
                   <h3 className="mt-4 text-lg font-bold leading-tight">
                     {r.city}
                   </h3>
-                  <p lang="hi" className="notranslate text-xs font-semibold opacity-80">
-                    {r.cityHi}
-                  </p>
 
                   <p className="mt-2 text-xs leading-relaxed opacity-90">
                     {r.zone}

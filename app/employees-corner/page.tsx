@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight, FileText, ListOrdered } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Employees Corner | Central Hindi Directorate",
@@ -70,95 +71,193 @@ const forms: Doc[] = [
   doc("Application form for advance for official tour", "application-form-advance-official-tour"),
 ];
 
-const heading =
-  "text-[clamp(1.9rem,3.2vw,2.5rem)] font-semibold leading-tight text-brand-dark after:mt-4 after:block after:h-1 after:w-14 after:rounded after:bg-brand hc:text-white hc:after:bg-white";
+/* ---------- colour themes (kept literal so Tailwind can see them) ---------- */
+type Theme = {
+  topLine: string;
+  cardBg: string;
+  iconBg: string;
+  badge: string;
+  pill: string;
+  row: string;
+  arrow: string;
+};
 
-function DocList({ items }: { items: Doc[] }) {
+const blue: Theme = {
+  topLine: "from-blue-600 to-indigo-600",
+  cardBg: "from-blue-50/50 via-white to-indigo-50/20",
+  iconBg: "bg-blue-600 text-white",
+  badge: "border-blue-200 bg-blue-100 text-blue-900",
+  pill: "border-blue-200 bg-blue-50/70 text-blue-900 hover:border-blue-400",
+  row: "hover:border-blue-300 hover:bg-blue-50/60",
+  arrow: "text-blue-600",
+};
+
+const emerald: Theme = {
+  topLine: "from-emerald-500 to-teal-600",
+  cardBg: "from-emerald-50/50 via-white to-teal-50/20",
+  iconBg: "bg-emerald-600 text-white",
+  badge: "border-emerald-200 bg-emerald-100 text-emerald-900",
+  pill: "border-emerald-200 bg-emerald-50/70 text-emerald-900 hover:border-emerald-400",
+  row: "hover:border-emerald-300 hover:bg-emerald-50/60",
+  arrow: "text-emerald-600",
+};
+
+function DocCard({
+  id,
+  title,
+  subtitle,
+  items,
+  theme,
+  Icon,
+}: {
+  id: string;
+  title: string;
+  subtitle: string;
+  items: Doc[];
+  theme: Theme;
+  Icon: typeof FileText;
+}) {
   return (
-    <ul className="overflow-hidden rounded-xl border border-line border-t-2 border-t-brand bg-white shadow-sm hc:border-white hc:bg-black">
-      {items.map((d, i) => (
-        <li key={d.href + i} className="border-b border-line last:border-b-0 hc:border-white">
-          <a
-            href={d.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-start justify-between gap-4 px-5 py-3.5 text-sm leading-snug text-ink transition hover:bg-brand-light hover:text-brand-dark sm:text-[15px] hc:text-white"
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className={`relative scroll-mt-24 overflow-hidden rounded-2xl border border-line bg-gradient-to-br ${theme.cardBg} p-5 shadow-xs sm:p-8 hc:border-white hc:bg-neutral-950`}
+    >
+      <span className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${theme.topLine}`} />
+
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span
+            className={`grid size-11 place-items-center rounded-xl shadow-xs ${theme.iconBg} hc:bg-neutral-800 hc:text-white`}
           >
-            <span>
-              {d.title}
-              <span className="sr-only"> (opens in a new tab)</span>
-            </span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              className="mt-0.5 shrink-0 text-brand transition-transform group-hover:translate-x-[3px] hc:text-white"
+            <Icon size={20} strokeWidth={2} />
+          </span>
+          <div>
+            <h2
+              id={`${id}-title`}
+              className="text-lg font-bold leading-snug text-ink sm:text-xl hc:text-white"
             >
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </a>
-        </li>
-      ))}
-    </ul>
+              {title}
+            </h2>
+            <p className="text-xs text-muted hc:text-neutral-300">{subtitle}</p>
+          </div>
+        </div>
+        <span
+          className={`rounded-full border px-2.5 py-0.5 text-xs font-bold ${theme.badge} hc:bg-neutral-800 hc:text-white`}
+        >
+          {items.length} documents
+        </span>
+      </div>
+
+      <ul className="mt-6 grid gap-2.5 md:grid-cols-2">
+        {items.map((d, i) => (
+          <li key={d.href + i}>
+            <a
+              href={d.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group flex h-full items-start justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3 text-sm leading-snug text-ink shadow-2xs transition ${theme.row} hc:border-white hc:bg-black hc:text-white`}
+            >
+              <span>
+                {d.title}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </span>
+              <ArrowUpRight
+                size={16}
+                aria-hidden="true"
+                className={`mt-0.5 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${theme.arrow} hc:text-white`}
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
 export default function EmployeesCornerPage() {
   return (
     <>
-      {/* Title */}
+      {/* ========================================================= */}
+      {/* 1. HERO HEADER                                            */}
+      {/* ========================================================= */}
       <section
         aria-labelledby="employees-title"
-        className="border-b border-line bg-brand-light py-10 hc:border-white hc:bg-black"
+        className="relative overflow-hidden border-b border-line bg-gradient-to-b from-brand-light/60 via-white to-amber-50/20 py-12 sm:py-16 hc:border-white hc:bg-black"
       >
-        <div className="mx-auto max-w-7xl px-4">
-          <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted hc:text-white">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-20 top-0 size-72 rounded-full bg-brand/5 blur-3xl hc:hidden"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-20 bottom-0 size-72 rounded-full bg-amber-500/5 blur-3xl hc:hidden"
+        />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+          <nav aria-label="Breadcrumb" className="mb-4 text-xs text-muted hc:text-white">
             <ol className="flex items-center gap-2">
               <li>
                 <Link href="/" className="hover:text-brand-dark hover:underline">
                   Home
                 </Link>
               </li>
-              <li aria-hidden="true">/</li>
+              <li aria-hidden="true">&bull;</li>
               <li aria-current="page" className="font-semibold text-brand-dark hc:text-white">
                 Employees Corner
               </li>
             </ol>
           </nav>
-          <h1 id="employees-title" className={heading}>
-            Employees Corner
-          </h1>
+
+          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+            <h1
+              id="employees-title"
+              className="mt-3 text-[clamp(2rem,3.6vw,2.8rem)] font-bold leading-tight text-brand-dark hc:text-white"
+            >
+              Employees Corner
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href="#seniority"
+                className={`rounded-lg border px-3.5 py-1.5 text-xs font-bold shadow-xs transition ${blue.pill} hc:border-white hc:bg-neutral-900 hc:text-white`}
+              >
+                Seniority lists
+              </a>
+              <a
+                href="#forms"
+                className={`rounded-lg border px-3.5 py-1.5 text-xs font-bold shadow-xs transition ${emerald.pill} hc:border-white hc:bg-neutral-900 hc:text-white`}
+              >
+                Applications &amp; forms
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Seniority lists */}
-      <section aria-labelledby="seniority-title" className="py-13 lg:py-18">
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 id="seniority-title" className="mb-5 text-xl font-semibold text-brand-dark sm:text-2xl hc:text-white">
-            Seniority lists and circulars
-          </h2>
-          <DocList items={seniorityLists} />
+      {/* ========================================================= */}
+      {/* 2. DOCUMENTS                                              */}
+      {/* ========================================================= */}
+      <div className="bg-gradient-to-b from-slate-50/60 via-white to-slate-50/60 py-12 sm:py-16 hc:bg-black">
+        <div className="mx-auto max-w-7xl space-y-8 px-4 sm:px-6">
+          <DocCard
+            id="seniority"
+            title="Seniority lists and circulars"
+            subtitle="Cadre-wise seniority lists of the Directorate"
+            items={seniorityLists}
+            theme={blue}
+            Icon={ListOrdered}
+          />
+          <DocCard
+            id="forms"
+            title="Applications and forms"
+            subtitle="PF, GPF, allowances, advances and leave"
+            items={forms}
+            theme={emerald}
+            Icon={FileText}
+          />
         </div>
-      </section>
-
-      {/* Forms */}
-      <section
-        aria-labelledby="forms-title"
-        className="border-t border-line bg-brand-light py-13 lg:py-18 hc:border-white hc:bg-black"
-      >
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 id="forms-title" className="mb-5 text-xl font-semibold text-brand-dark sm:text-2xl hc:text-white">
-            Applications and forms
-          </h2>
-          <DocList items={forms} />
-        </div>
-      </section>
+      </div>
     </>
   );
 }

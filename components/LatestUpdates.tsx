@@ -6,7 +6,6 @@ import {
   AlertCircle,
   ArrowRight,
   ArrowUpRight,
-  Bell,
   Calendar,
   ExternalLink,
   FileDown,
@@ -18,6 +17,15 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { latestUpdates, type Update } from "@/data/updates";
+
+/**
+ * true  = visitors who enabled "reduce motion" in their OS see a static, scrollable list.
+ * false = the notice board always scrolls; the Pause button lets anyone stop it.
+ */
+const RESPECT_REDUCED_MOTION = false;
+const rm = RESPECT_REDUCED_MOTION;
+/** Seconds each notice takes to pass. Raise for a slower scroll. */
+const SECONDS_PER_NOTICE = 5;
 
 // Category Color Mapping for Govt Badges
 const CATEGORY_STYLES: Record<
@@ -62,20 +70,75 @@ const CATEGORY_STYLES: Record<
   },
 };
 
-const formatDay = (dateStr: string) => {
-  const d = new Date(dateStr);
-  return d.getUTCDate();
-};
+const formatDay = (dateStr: string) => new Date(dateStr).getUTCDate();
+const formatMonth = (dateStr: string) =>
+  new Date(dateStr).toLocaleString("en-IN", { month: "short", timeZone: "UTC" }).toUpperCase();
+const formatYear = (dateStr: string) => new Date(dateStr).getUTCFullYear();
 
-const formatMonth = (dateStr: string) => {
-  const d = new Date(dateStr);
-  return d.toLocaleString("en-IN", { month: "short", timeZone: "UTC" }).toUpperCase();
-};
+/** One notice row. `dup` marks the looped copy: hidden from screen readers and skipped by Tab. */
+function NoticeRow({ u, dup }: { u: Update; dup: boolean }) {
+  const style = CATEGORY_STYLES[u.category || "Admissions"] || CATEGORY_STYLES.Admissions;
+  const tab = dup ? -1 : undefined;
+  const actionCls =
+    "inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2.5 py-1 text-xs font-semibold text-brand shadow-2xs transition group-hover:bg-brand group-hover:text-white hc:border-white hc:bg-neutral-800 hc:text-white";
 
-const formatYear = (dateStr: string) => {
-  const d = new Date(dateStr);
-  return d.getUTCFullYear();
-};
+  return (
+    <article
+      className={`group relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-xl border border-line/70 bg-gradient-to-r ${style.bg} p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-sm hc:border-white hc:bg-neutral-900`}
+    >
+      {/* Left: Date Box & NEW Indicator */}
+      <div className="flex items-center gap-3 shrink-0">
+        <div className="flex size-12 shrink-0 flex-col items-center justify-center rounded-xl border border-line bg-white shadow-2xs hc:border-white/20 hc:bg-black">
+          <span className="text-[9px] font-bold uppercase tracking-wider text-muted">{formatMonth(u.date)}</span>
+          <span className="text-sm font-extrabold leading-none text-brand-dark hc:text-white">{formatDay(u.date)}</span>
+          <span className="text-[8px] font-medium text-muted/80">{formatYear(u.date)}</span>
+        </div>
+
+        {/* Category Badge & Live Pulse */}
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1.5">
+            <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold border ${style.badge} hc:bg-neutral-800 hc:text-white`}>
+              {u.category || "Notice"}
+            </span>
+            {u.isNew && (
+              <span className="inline-flex items-center gap-1 rounded bg-red-500 px-1.5 py-0.2 text-[9px] font-extrabold text-white animate-pulse">
+                NEW
+              </span>
+            )}
+          </div>
+          {/* <span className="font-mono text-[10px] text-muted truncate max-w-[120px] hc:text-neutral-400">
+            {u.refNo || "CHD/GEN/2026"}
+          </span> */}
+        </div>
+      </div>
+
+      {/* Middle: Title & Hindi Subtitle */}
+      <div className="flex-1 min-w-0 pr-2">
+        <h4 className="text-xs sm:text-[13px] font-bold leading-snug text-ink transition-colors group-hover:text-brand-dark hc:text-white line-clamp-2">
+          {u.title}
+        </h4>
+      </div>
+
+      {/* Right: Download / Link Action */}
+      <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+        {/* {u.fileSize && (
+          <span className="hidden xl:inline text-[10px] font-medium text-muted hc:text-neutral-400">{u.fileSize}</span>
+        )} */}
+        {u.external ? (
+          <a href={u.href} target="_blank" rel="noopener noreferrer" tabIndex={tab} className={actionCls}>
+            <span>View Notice</span>
+            <ArrowUpRight size={13} />
+          </a>
+        ) : (
+          <Link href={u.href} tabIndex={tab} className={actionCls}>
+            <span>Details</span>
+            <ArrowRight size={13} />
+          </Link>
+        )}
+      </div>
+    </article>
+  );
+}
 
 export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -87,12 +150,22 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
 
   const filteredItems = useMemo(() => {
     if (selectedCategory === "All") return sortedItems.slice(0, limit);
-    return sortedItems
-      .filter((u) => u.category === selectedCategory)
-      .slice(0, limit);
+    return sortedItems.filter((u) => u.category === selectedCategory).slice(0, limit);
   }, [selectedCategory, sortedItems, limit]);
 
   const categories = ["All", "Admissions", "Grants", "Journals", "Recruitment"];
+  const scroll = filteredItems.length >= 4; // too few notices: show a plain static list
+
+  const list = (dup: boolean) => (
+    <div
+      aria-hidden={dup || undefined}
+      className={`space-y-3 pb-3 ${dup && rm ? "motion-reduce:hidden" : ""}`}
+    >
+      {filteredItems.map((u) => (
+        <NoticeRow key={u.title} u={u} dup={dup} />
+      ))}
+    </div>
+  );
 
   return (
     <section
@@ -110,23 +183,10 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        {/* ========================================================= */}
-        {/* 1. SECTION HEADER (GOVT STYLE)                            */}
-        {/* ========================================================= */}
+        {/* 1. SECTION HEADER */}
         <Reveal className="mb-8 sm:mb-10">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-line pb-6 sm:flex-row sm:items-end hc:border-white">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-brand-light to-amber-100/60 px-3 py-1 text-xs font-semibold text-brand hc:bg-black hc:text-white hc:ring-1 hc:ring-white">
-                  <Bell size={13} className="text-brand animate-bounce" aria-hidden="true" />
-                  GOVERNMENT NOTICES &bull; आधिकारिक सूचनाएं एवं परिपत्र
-                </span>
-                <span className="inline-flex items-center gap-1 rounded bg-red-100 px-2 py-0.5 text-[11px] font-bold text-red-700 animate-pulse hc:bg-neutral-800 hc:text-red-400">
-                  <span className="size-1.5 rounded-full bg-red-600" />
-                  LIVE
-                </span>
-              </div>
-
               <h2
                 id="updates-heading"
                 className="mt-2.5 text-[clamp(1.7rem,2.8vw,2.3rem)] font-bold leading-tight text-brand-dark hc:text-white"
@@ -161,13 +221,9 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
           </div>
         </Reveal>
 
-        {/* ========================================================= */}
-        {/* 2. MASTER 2-PANEL LAYOUT                                  */}
-        {/* ========================================================= */}
+        {/* 2. MASTER 2-PANEL LAYOUT */}
         <div className="grid gap-8 lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-10">
-          {/* ======================================================= */}
-          {/* LEFT: SPOTLIGHT URGENT ANNOUNCEMENT CARD                */}
-          {/* ======================================================= */}
+          {/* LEFT: SPOTLIGHT URGENT ANNOUNCEMENT CARD */}
           <Reveal from="left" className="flex flex-col">
             <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 border-amber-300/80 bg-gradient-to-br from-amber-50/80 via-white to-orange-50/40 p-5 sm:p-6 shadow-md shadow-amber-500/5 hc:border-white hc:bg-neutral-950">
               {/* National Tricolor Top Accent Line */}
@@ -176,10 +232,6 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
               <div>
                 {/* Header Spotlight Ribbon */}
                 <div className="flex items-center justify-between gap-2 border-b border-amber-200/80 pb-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-2.5 py-0.5 text-[11px] font-bold text-white shadow-xs">
-                    <Sparkles size={12} />
-                    SPOTLIGHT NOTICE
-                  </span>
                   <span className="font-mono text-xs font-bold text-amber-900 hc:text-neutral-300">
                     Session 2026–27
                   </span>
@@ -193,12 +245,6 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
                   <h3 className="mt-1 text-lg font-bold leading-snug text-brand-dark hc:text-white">
                     Admissions Open for Hindi Correspondence Courses
                   </h3>
-                  <p
-                    lang="hi"
-                    className="notranslate mt-0.5 text-xs font-semibold text-brand/90 hc:text-neutral-300"
-                  >
-                    पत्राचार पाठ्यक्रम — प्रमाण-पत्र, डिप्लोमा एवं सिविल सेवा पाठ्यक्रम
-                  </p>
                 </div>
 
                 {/* Key Bullet Points */}
@@ -227,7 +273,7 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
                 <div className="mt-3.5 rounded-xl border border-line bg-white/70 p-3 text-xs hc:border-white/20 hc:bg-neutral-900">
                   <div className="flex items-center gap-1.5 text-amber-900 font-bold hc:text-amber-300">
                     <AlertCircle size={13} className="text-amber-600" />
-                    <span>Grants Alert &bull; स्वैच्छिक संस्था अनुदान</span>
+                    <span>Grants Alert </span>
                   </div>
                   <p className="mt-1 text-[11px] text-muted hc:text-neutral-300">
                     VHO scheme grant applications for FY 2026-27 are now active on the central portal.
@@ -243,7 +289,7 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
                   rel="noopener noreferrer"
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand to-brand-dark px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-brand/20 transition-all hover:from-brand-dark hover:to-brand hc:bg-white hc:text-black"
                 >
-                  <span>Apply Online &bull; ऑनलाइन आवेदन करें</span>
+                  <span>Apply Online </span>
                   <ExternalLink size={13} />
                 </a>
 
@@ -254,11 +300,9 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
             </div>
           </Reveal>
 
-          {/* ======================================================= */}
-          {/* RIGHT: OFFICIAL NOTICE BOARD (CIRCULARS TICKER LIST)    */}
-          {/* ======================================================= */}
+          {/* RIGHT: OFFICIAL NOTICE BOARD (SCROLLING CIRCULARS) */}
           <Reveal from="right" delay={120} className="flex flex-col">
-            <div className="flex h-full flex-col justify-between rounded-2xl border border-line bg-white shadow-sm hc:border-white hc:bg-neutral-950">
+            <div className="flex h-full flex-col rounded-2xl border border-line bg-white shadow-sm hc:border-white hc:bg-neutral-950">
               {/* Notice Board Header Bar */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-slate-50/80 px-4 py-3 sm:px-6 hc:border-white hc:bg-neutral-900">
                 <div className="flex items-center gap-2">
@@ -266,27 +310,25 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
                     <ScrollText size={15} />
                   </span>
                   <div>
-                    <h3 className="text-sm font-bold text-brand-dark hc:text-white">
-                      Official Gazette &amp; Circulars Board
-                    </h3>
-                    <span className="text-[10px] font-medium text-muted hc:text-neutral-400">
-                      Showing {filteredItems.length} active announcements
-                    </span>
+                    <h3 className="text-sm font-bold text-brand-dark hc:text-white">Official Gazette &amp; Circulars Board</h3>
                   </div>
                 </div>
 
-                {/* Marquee Controls & Filter Pills */}
-                <div className="flex items-center gap-2">
+                {/* Marquee Controls */}
+                {scroll && (
                   <button
                     type="button"
                     onClick={() => setIsPaused(!isPaused)}
-                    className="inline-flex items-center gap-1 rounded-full border border-line bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow-2xs transition hover:border-brand hover:text-brand hc:border-white hc:bg-neutral-800 hc:text-white"
+                    aria-pressed={isPaused}
+                    className={`inline-flex items-center gap-1 rounded-full border border-line bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow-2xs transition hover:border-brand hover:text-brand hc:border-white hc:bg-neutral-800 hc:text-white ${
+                      rm ? "motion-reduce:hidden" : ""
+                    }`}
                     title={isPaused ? "Resume scrolling" : "Pause scrolling"}
                   >
                     {isPaused ? <Play size={11} /> : <Pause size={11} />}
                     <span>{isPaused ? "Resume" : "Pause"}</span>
                   </button>
-                </div>
+                )}
               </div>
 
               {/* Category Filter Pills Bar */}
@@ -299,6 +341,7 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
                       key={cat}
                       type="button"
                       onClick={() => setSelectedCategory(cat)}
+                      aria-pressed={isActive}
                       className={`rounded-full px-3 py-0.5 text-xs font-semibold transition-all ${
                         isActive
                           ? "bg-brand text-white shadow-xs hc:bg-white hc:text-black"
@@ -311,104 +354,35 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
                 })}
               </div>
 
-              {/* Scrollable Notice Rows Container */}
-              <div className="relative flex-1 overflow-hidden p-2 sm:p-4">
+              {/* Scrolling notice window */}
+              <div className="group/board relative min-h-[26rem] flex-1">
                 <div
-                  className={`space-y-3 ${
-                    isPaused ? "" : "transition-transform"
+                  className={`absolute inset-0 px-2 sm:px-4 ${
+                    scroll
+                      ? `overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_6%,black_94%,transparent)] ${
+                          rm ? "motion-reduce:overflow-y-auto motion-reduce:[mask-image:none]" : ""
+                        }`
+                      : "overflow-y-auto py-2 sm:py-4"
                   }`}
                 >
-                  {filteredItems.map((u: Update) => {
-                    const style =
-                      CATEGORY_STYLES[u.category || "Admissions"] ||
-                      CATEGORY_STYLES.Admissions;
-
-                    return (
-                      <article
-                        key={u.title}
-                        className={`group relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-xl border border-line/70 bg-gradient-to-r ${style.bg} p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-sm hc:border-white hc:bg-neutral-900`}
-                      >
-                        {/* Left: Date Box & NEW Indicator */}
-                        <div className="flex items-center gap-3 shrink-0">
-                          <div className="flex size-12 shrink-0 flex-col items-center justify-center rounded-xl border border-line bg-white shadow-2xs hc:border-white/20 hc:bg-black">
-                            <span className="text-[9px] font-bold uppercase tracking-wider text-muted">
-                              {formatMonth(u.date)}
-                            </span>
-                            <span className="text-sm font-extrabold leading-none text-brand-dark hc:text-white">
-                              {formatDay(u.date)}
-                            </span>
-                            <span className="text-[8px] font-medium text-muted/80">
-                              {formatYear(u.date)}
-                            </span>
-                          </div>
-
-                          {/* Category Badge & Live Pulse */}
-                          <div className="flex flex-col gap-1">
-                            <div className="flex items-center gap-1.5">
-                              <span
-                                className={`rounded-full px-2 py-0.5 text-[10px] font-bold border ${style.badge} hc:bg-neutral-800 hc:text-white`}
-                              >
-                                {u.category || "Notice"}
-                              </span>
-
-                              {u.isNew && (
-                                <span className="inline-flex items-center gap-1 rounded bg-red-500 px-1.5 py-0.2 text-[9px] font-extrabold text-white animate-pulse">
-                                  NEW &bull; नया
-                                </span>
-                              )}
-                            </div>
-                            <span className="font-mono text-[10px] text-muted truncate max-w-[120px] hc:text-neutral-400">
-                              {u.refNo || "CHD/GEN/2026"}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Middle: Title & Hindi Subtitle */}
-                        <div className="flex-1 min-w-0 pr-2">
-                          <h4 className="text-xs sm:text-[13px] font-bold leading-snug text-ink transition-colors group-hover:text-brand-dark hc:text-white line-clamp-2">
-                            {u.title}
-                          </h4>
-                          {u.titleHi && (
-                            <p
-                              lang="hi"
-                              className="notranslate mt-0.5 text-[11px] font-medium text-brand/80 hc:text-neutral-300 line-clamp-1"
-                            >
-                              {u.titleHi}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Right: Download / Link Action */}
-                        <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-                          {u.fileSize && (
-                            <span className="hidden xl:inline text-[10px] font-medium text-muted hc:text-neutral-400">
-                              {u.fileSize}
-                            </span>
-                          )}
-
-                          {u.external ? (
-                            <a
-                              href={u.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2.5 py-1 text-xs font-semibold text-brand shadow-2xs transition group-hover:bg-brand group-hover:text-white hc:border-white hc:bg-neutral-800 hc:text-white"
-                            >
-                              <span>View Notice</span>
-                              <ArrowUpRight size={13} />
-                            </a>
-                          ) : (
-                            <Link
-                              href={u.href}
-                              className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2.5 py-1 text-xs font-semibold text-brand shadow-2xs transition group-hover:bg-brand group-hover:text-white hc:border-white hc:bg-neutral-800 hc:text-white"
-                            >
-                              <span>Details</span>
-                              <ArrowRight size={13} />
-                            </Link>
-                          )}
-                        </div>
-                      </article>
-                    );
-                  })}
+                  {filteredItems.length === 0 ? (
+                    <p className="py-10 text-center text-sm text-muted hc:text-neutral-300">No notices in this category yet.</p>
+                  ) : (
+                    <div
+                      key={selectedCategory}
+                      style={{ animationDuration: `${filteredItems.length * SECONDS_PER_NOTICE}s` }}
+                      className={
+                        scroll
+                          ? `animate-marquee-up pt-3 group-has-[:focus-visible]/board:[animation-play-state:paused] group-hover/board:[animation-play-state:paused] ${
+                              isPaused ? "[animation-play-state:paused]" : ""
+                            } ${rm ? "motion-reduce:animate-none" : ""}`
+                          : ""
+                      }
+                    >
+                      {list(false)}
+                      {scroll && list(true)}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -425,7 +399,7 @@ export default function LatestUpdates({ limit = 8 }: { limit?: number }) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 font-semibold text-brand hover:underline hc:text-yellow-300"
                 >
-                  <span>Archives &bull; पूरा सूचना पुरालेख</span>
+                  <span>Archives</span>
                   <ArrowRight size={12} />
                 </a>
               </div>

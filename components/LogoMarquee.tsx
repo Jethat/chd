@@ -34,7 +34,7 @@ export default function LogoMarquee() {
         <div className="group/logos overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] motion-reduce:overflow-x-auto motion-reduce:[mask-image:none]">
           <div
             style={{ animationDuration: `${logos.length * SECONDS_PER_LOGO}s` }}
-            className="flex w-max animate-marquee-left group-focus-within/logos:[animation-play-state:paused] group-hover/logos:[animation-play-state:paused] motion-reduce:animate-none"
+            className="flex w-max animate-marquee-left group-has-[:focus-visible]/logos:[animation-play-state:paused] group-hover/logos:[animation-play-state:paused] motion-reduce:animate-none"
           >
             {Array.from({ length: GROUPS }, (_, g) => (
               <ul

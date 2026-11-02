@@ -20,7 +20,6 @@ const leaders = [
     name: "Shri Pralhad Joshi",
     role: "Hon'ble Minister of Education",
     subRole: "Ministry of Education, Govt. of India",
-    hindiRole: "माननीय शिक्षा मंत्री, भारत सरकार",
     badge: "Ministry of Education",
     badgeColor: "bg-amber-100 text-amber-900 border-amber-300/80",
     topLine: "from-amber-500 via-orange-500 to-amber-600",
@@ -34,7 +33,6 @@ const leaders = [
     name: "Prof. Hitendra Kumar Mishra",
     role: "Director, Central Hindi Directorate",
     subRole: "Department of Higher Education",
-    hindiRole: "निदेशक, केन्द्रीय हिन्दी निदेशालय",
     badge: "Directorate Head",
     badgeColor: "bg-blue-100 text-blue-900 border-blue-300/80",
     topLine: "from-blue-600 via-indigo-500 to-teal-500",
@@ -94,17 +92,6 @@ export default function AboutSection() {
           {/* ========================================================= */}
           <Reveal from="left" className="min-w-0">
             <div className="min-w-0">
-              {/* Motto Ribbon */}
-              <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-amber-200/80 bg-gradient-to-r from-amber-50 via-white to-amber-100/50 px-3.5 py-1 text-xs font-semibold text-amber-900 shadow-2xs hc:border-white hc:bg-black hc:text-white">
-                <Sparkles size={13} className="text-amber-600" aria-hidden="true" />
-                <span lang="hi" className="font-serif font-bold text-amber-800 hc:text-white">
-                  &ldquo;अहं राष्ट्री संगमनी वसूनाम्&rdquo;
-                </span>
-                <span className="text-amber-500/60">&bull;</span>
-                <span className="text-[11px] font-medium text-amber-800/90 hc:text-neutral-300">
-                  Rigveda 10.125.3
-                </span>
-              </div>
 
               {/* Title & Subtitle */}
               <h2
@@ -113,12 +100,6 @@ export default function AboutSection() {
               >
                 About Central Hindi Directorate
               </h2>
-              <p
-                lang="hi"
-                className="notranslate mt-1 text-sm font-semibold text-brand/90 hc:text-neutral-300"
-              >
-                केन्द्रीय हिन्दी निदेशालय &bull; उच्चतर शिक्षा विभाग, शिक्षा मंत्रालय, भारत सरकार
-              </p>
 
               {/* Decorative Gradient Bar */}
               <div
@@ -144,9 +125,6 @@ export default function AboutSection() {
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold uppercase tracking-wider text-amber-900 hc:text-amber-300">
                         Constitutional Directive &bull; Article 351
-                      </span>
-                      <span className="rounded bg-amber-200/70 px-1.5 py-0.2 text-[10px] font-bold text-amber-900 hc:bg-neutral-800 hc:text-white">
-                        Part XVII
                       </span>
                     </div>
                     <blockquote className="mt-1.5 text-justify text-xs leading-relaxed text-slate-700 italic hc:text-neutral-300 sm:text-[13px]">
@@ -195,7 +173,7 @@ export default function AboutSection() {
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand hover:text-brand-dark hover:underline hc:text-yellow-300"
                 >
                   <CheckCircle2 size={13} />
-                  <span>Administrative Structure &bull; संगठनात्मक ढांचा</span>
+                  <span>Administrative Structure</span>
                 </Link>
               </div>
             </div>
@@ -218,14 +196,11 @@ export default function AboutSection() {
                       />
 
                       {/* Header Badge */}
-                      <div className="pt-2 px-2 pb-1 flex items-center justify-between">
+                      <div className="pt-2 px-2 pb-1 flex items-center justify-center text-centerjustify-between">
                         <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide border ${l.badgeColor} hc:bg-neutral-800 hc:text-white`}
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold  tracking-wide border ${l.badgeColor} hc:bg-neutral-800 hc:text-white`}
                         >
                           {l.badge}
-                        </span>
-                        <span className="text-[9px] font-bold uppercase tracking-wider text-muted/70 hc:text-neutral-400">
-                          Govt. of India
                         </span>
                       </div>
 
@@ -241,7 +216,7 @@ export default function AboutSection() {
                       </div>
 
                       {/* Caption Area with Rich Hierarchy */}
-                      <figcaption className="flex flex-1 flex-col justify-center px-2 py-3 text-center">
+                      <figcaption className="flex flex-1 flex-col justify-center px-1 py-3 text-center">
                         <span className="text-sm font-bold leading-tight text-ink sm:text-[15px] hc:text-white">
                           {l.name}
                         </span>
@@ -250,13 +225,6 @@ export default function AboutSection() {
                           className={`mt-1 text-xs font-semibold leading-tight ${l.accentText} hc:text-neutral-200`}
                         >
                           {l.role}
-                        </span>
-
-                        <span
-                          lang="hi"
-                          className="notranslate mt-0.5 text-[10px] text-muted leading-tight hc:text-neutral-400"
-                        >
-                          {l.hindiRole}
                         </span>
                       </figcaption>
                     </figure>

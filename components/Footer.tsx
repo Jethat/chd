@@ -119,7 +119,7 @@ export default function Footer() {
           <ul className="flex flex-wrap items-center gap-2">
             {badges.map((b) => (
               <li key={b.src} className="rounded bg-white p-0.5">
-                <Image src={b.src} alt={b.alt} width={120} height={32} unoptimized className="h-8 w-auto" />
+                <img src={b.src} alt={b.alt} className="h-8 w-auto" />
               </li>
             ))}
           </ul>
