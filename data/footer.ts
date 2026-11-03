@@ -1,7 +1,6 @@
 export const footerInfo = {
   name: "Central Hindi Directorate",
   note: "Content on this website is published and managed by Central Hindi Directorate, Ministry of Education (Department of Higher Education).",
-  query: "For any query regarding this website, please contact the web information manager: Director",
   phone: "011-20862356",
   address: "Central Hindi Directorate, West Block-VII, Ramakrishna Puram, New Delhi-110066",
   emails: ["dirchd-mhrd@gov.in", "aro-chd.edu@nic.in", "patodirectorchd@gmail.com"],
