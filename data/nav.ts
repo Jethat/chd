@@ -1,12 +1,14 @@
 export interface NavLeaf {
   label: string;
   href: string;
+  target?: "_blank" | "_self";
 }
 
 export interface NavChild {
   label: string;
   href: string;
-  children?: NavLeaf[]; // second-level flyout
+  target?: "_blank" | "_self";
+  children?: NavLeaf[];
 }
 
 export interface NavItem {
@@ -20,14 +22,15 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
-    label: "About Us",
-    href: "/about",
+    label: "About",
+    href: "#",
     children: [
+      { label: "About Us", href: "/about" },
       { label: "Organization Chart", href: "/about/organization-chart" },
       { label: "Duties and Responsibilities", href: "/about/duties-responsibilities" },
       { label: "Programme and Guidelines", href: "#" },
-      { label: "Who's Who", href: "#" },
-      { label: "Ex-Directors", href: "#" },
+      { label: "Who's Who", href: "/about/team" },
+      { label: "Ex-Directors", href: "/about/ex-directors" },
       { label: "Devanagari Lipi Tatha Hindi Vartani Manakikaran", href: "#" },
       { label: "Director Introduction", href: "#" },
     ],
@@ -35,8 +38,9 @@ export const navItems: NavItem[] = [
   { label: "Employees Corner", href: "/employees-corner" },
   {
     label: "Schemes",
-    href: "/schemes",
+    href: "#",
     children: [
+      { label: "Schemes", href: "/schemes" },
       {
         label: "Correspondence Courses",
         href: "/schemes/correspondence-courses",
@@ -74,7 +78,7 @@ export const navItems: NavItem[] = [
     children: [
       { label: "Photo Gallery", href: "/photo-gallery" },
       { label: "Video Gallery", href: "#" },
-      { label: "Hindi Bhashavani Youtube", href: "#" },
+      { label: "Hindi Bhashavani Youtube", href: "https://www.youtube.com/channel/UCDrHk49bdP2TG7HM08PFgVQ", target: "_blank", },
     ],
   },
   {
@@ -95,8 +99,9 @@ export const navItems: NavItem[] = [
     href: "#",
     align: "right",
     children: [
-      { label: "News", href: "#" },
-      { label: "Tenders", href: "#" },
+      { label: "Notice Board", href: "/notice" },
+      { label: "News", href: "/notice/news" },
+      { label: "Tenders", href: "/notice/tenders" },
       { label: "Recruitment", href: "#" },
       { label: "Circulars", href: "#" },
       { label: "E-magazine", href: "#" },

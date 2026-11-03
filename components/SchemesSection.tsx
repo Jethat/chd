@@ -144,7 +144,7 @@ export default function SchemesSection() {
                 id="schemes-heading"
                 className="mt-2.5 text-[clamp(1.6rem,2.8vw,2.3rem)] font-bold leading-tight text-brand-dark hc:text-white"
               >
-                Flagship Schemes &amp; Public Services
+                Schemes &amp; Public Services
               </h2>
               <p className="mt-1 text-sm text-muted hc:text-neutral-300">
                 Major statutory programmes executed by the Central Hindi Directorate for education, grants, awards, and lexicography.
@@ -154,7 +154,7 @@ export default function SchemesSection() {
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-medium text-ink shadow-xs hc:border-white hc:bg-neutral-900 hc:text-white">
                 <CheckCircle2 size={13} className="text-emerald-600" />
-                6 Flagship Programmes Active
+                6 Programmes Active
               </span>
             </div>
           </div>

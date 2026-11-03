@@ -704,35 +704,13 @@ export default function KoshPage() {
         />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-          <nav
-            aria-label="Breadcrumb"
-            className="mb-4 text-xs text-muted hc:text-white"
-          >
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <Link
-                  href="/"
-                  className="hover:text-brand-dark hover:underline"
-                >
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true">&raquo;</li>
-              <li>
-                <Link
-                  href="/schemes"
-                  className="hover:text-brand-dark hover:underline"
-                >
-                  Schemes
-                </Link>
-              </li>
-              <li aria-hidden="true">&raquo;</li>
-              <li
-                aria-current="page"
-                className="font-semibold text-brand-dark hc:text-white"
-              >
-                Kosh
-              </li>
+          <nav aria-label="Breadcrumb" className="mb-4 text-xs text-muted hc:text-white">
+            <ol className="flex items-center gap-2">
+              <li><Link href="/" className="hover:text-brand-dark hover:underline">Home</Link></li>
+              <li aria-hidden="true">&bull;</li>
+              <li><Link href="/schemes" className="hover:text-brand-dark hover:underline">Schemes</Link></li>
+              <li aria-hidden="true">&bull;</li>
+              <li aria-current="page" className="font-semibold text-brand-dark hc:text-white">Kosh</li>
             </ol>
           </nav>
 
